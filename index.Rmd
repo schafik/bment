@@ -10,15 +10,15 @@ output:
 
 ###Betterment Data
 
-  * [User + Goal Data](http://schafik.github.io/bangla/1_user_goal.html)
+  * [User + Goal Data](http://schafik.github.io/bment/1_user_goal.html)
 
 ###DOSPERT Data
 
- * [Financial Scale Analysis](http://schafik.github.io/bangla/2_dospert.html)
- * [Split (Gambling vs. Investment) Financial Scale Analysis](http://schafik.github.io/bangla/3_dospert_split.html)
+ * [Financial Scale Analysis](http://schafik.github.io/bment/2_dospert.html)
+ * [Split (Gambling vs. Investment) Financial Scale Analysis](http://schafik.github.io/bment/3_dospert_split.html)
  
 ###Betterment Data + DOSPERT 
 
-  * [Predicting Allocation Deviation](http://schafik.github.io/bangla/4_predictions.html)
+  * [Predicting Allocation Deviation](http://schafik.github.io/bment/4_predictions.html)
   
   
