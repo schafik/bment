@@ -10,7 +10,7 @@ output:
 
 ####Betterment Data
 
-  * [User + Goal Data](http://schafik.github.io/bangla/user_goal.html)
+  * [User + Goal Data](http://schafik.github.io/bangla/presentations/user_goal.html)
 
 ####DOSPERT Data
 
