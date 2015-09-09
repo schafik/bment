@@ -19,6 +19,6 @@ output:
  
 ###Betterment Data + DOSPERT 
 
-  * [Predicting Allocation Deviation](http://schafik.github.io/bment/4_predictions.html)
+  * [Predicting Allocation Deviation](http://schafik.github.io/bment/4_predicting.html)
   
   
