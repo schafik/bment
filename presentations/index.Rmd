@@ -1,0 +1,24 @@
+---
+title: "Betterment Pilot"
+date: "Updated `r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document:
+    toc: no
+    number_sections: no
+    theme: cosmo
+---
+
+####Betterment Data
+
+  * [User + Goal Data](https://vlab.decisionsciences.columbia.edu/salah/user_goal_ii.html)
+
+####DOSPERT Data
+
+ * [Financial Scale Analysis](https://vlab.decisionsciences.columbia.edu/salah/dospert_combined_ii.html)
+ * [Split (Gambling vs. Investment) Financial Scale Analysis](https://vlab.decisionsciences.columbia.edu/salah/dospert_split_ii.html)
+ 
+####Betterment Data + DOSPERT 
+
+  * [Predicting Allocation Deviation](https://vlab.decisionsciences.columbia.edu/salah/user_dospert_deviations_v.html)
+  
+  

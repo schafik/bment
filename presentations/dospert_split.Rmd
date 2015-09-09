@@ -1,0 +1,199 @@
+---
+title: 'DOSPERT Data: Gambling vs Investment'
+author: "Salah Chafik <salah@decisionsciences.columbia.edu>"
+output:
+  html_document:
+    theme: cosmo
+    toc: yes
+date: "Updated `r format(Sys.time(), '%d %B, %Y')`"
+---
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+source("/git_repositories/betterment/scripts/helper_scripts/load_packages.R")
+source("/git_repositories/betterment/scripts/helper_scripts/plotting_help.R")
+# source("/git_repositories/betterment/scripts/pilot/qualtrics/helper_dospert.R")
+full_data <- read.csv("/git_repositories/betterment/data/in_process_data/pilot_8_10.csv", stringsAsFactors=F) %>%
+              select(unique_id, dohmen)
+gamble <- read.csv("/git_repositories/betterment/data/in_process_data/pilot_8_10_gamble.csv")
+gamble <- left_join(gamble, full_data, by = "unique_id")
+invest <- read.csv("/git_repositories/betterment/data/in_process_data/pilot_8_10_invest.csv")
+invest <- left_join(invest, full_data, by = "unique_id")
+```
+
+#Risk Taking
+####higher number = greater risk taking 
+  
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=4, cache=TRUE}
+plot_hist(gamble, "finRT_sum_G") + ggtitle("gambling domain") + theme(text=element_text(family="Georgia", face="bold"))
+summary(gamble$finRT_sum_G)
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=4, cache=TRUE}
+plot_hist(invest, "finRT_sum_I") + ggtitle("investment domain") + theme(text=element_text(family="Georgia", face="bold"))
+summary(invest$finRT_sum_I)
+```
+
+####takeaway 
+> people are quite willing to take investment risks, and very unwilling to take gambling risks
+
+\
+[back to table of contents](#TOC)
+
+#Risk Benefit
+####higher number = greater benefits
+  
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=4, cache=TRUE}
+plot_hist(gamble, "finRB_sum_G") + ggtitle("gambling domain") + theme(text=element_text(family="Georgia", face="bold"))
+summary(gamble$finRB_sum)
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=4, cache=TRUE}
+plot_hist(invest, "finRB_sum_I") + ggtitle("investment domain") + theme(text=element_text(family="Georgia", face="bold"))
+summary(invest$finRB_sum_I)
+```
+
+####takeaway 
+> people find more benefit from risk in investment domain over gambling domain (by a factor of 2)
+
+\
+[back to table of contents](#TOC)
+
+#Risk Perception
+####higher number = perceptions of greater risk 
+  
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=4, cache=TRUE}
+plot_hist(gamble, "finRP_sum_G") + ggtitle("gambling domain") + theme(text=element_text(family="Georgia", face="bold"))
+summary(gamble$finRP_sum_G)
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=4, cache=TRUE}
+plot_hist(invest, "finRP_sum_I") + ggtitle("investment domain") + theme(text=element_text(family="Georgia", face="bold"))
+summary(invest$finRP_sum_I)
+```
+
+####takeaway
+> people feel that there is more risk in gambling domain vs investment domain
+
+\
+[back to table of contents](#TOC)
+
+```{r, eval=FALSE, echo=FALSE}
+#Risk Seeking/Aversion: beta
+####Positive coef(b) = **risk seeking** behavior, Negative coef(b) = **risk aversion** behavior
+  + Preference (X) = a(Expected Benefit(X)) + b(Perceived Risk(X)) + c
+#```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=4, cache=TRUE}
+plot_hist(gamble, "fin_RP_G") + ggtitle("gambling domain") + theme(text=element_text(family="Georgia", face="bold"))
+summary(gamble$fin_RP_G)
+#```
+
+#```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=4, cache=TRUE}
+plot_hist(invest, "fin_RP_I") + ggtitle("investment domain") + theme(text=element_text(family="Georgia", face="bold"))
+summary(invest$fin_RP_I)
+#```
+
+####takeaway 
+> participants are slightly more risk averse in investment domain
+
+\
+[back to table of contents](#TOC)
+```
+
+```{r, eval=FALSE, echo=FALSE}
+#General Risk Taking Propensity 
+####Positive value means people have a propensity to take risk
+  + lm(risk taking propensity ~ benefit + perception)
+    + intercept from above model
+  
+#```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=4, cache=TRUE}
+plot_hist(gamble, "fin_int_G") + ggtitle("gambling domain") + theme(text=element_text(family="Georgia", face="bold"))
+summary(gamble$fin_int_G)
+#```
+
+#```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=4, cache=TRUE}
+plot_hist(invest, "fin_int_I") + ggtitle("investment domain") + theme(text=element_text(family="Georgia", face="bold"))
+summary(invest$fin_int_I)
+#```
+
+####takeaway
+> people have slightly higher propensity to take risk in investment domain vs. gambling domain
+
+\
+[back to table of contents](#TOC)
+```
+
+
+#Correlations: SPLOM plots
+```{r, echo=FALSE}
+#   + reminder when r = 
+#     + .70 or higher  Very strong positive relationship 
+#     + .40 to +.69  Strong positive relationship 
+#     + .30 to +.39	Moderate positive relationship 
+#     + .20 to +.29	weak positive relationship 
+#     + .01 to +.19	No or negligible relationship 
+#     + -.01 to -.19	No or negligible relationship 
+#     + -.20 to -.29	weak negative relationship 
+#     + -.30 to -.39	Moderate negative relationship 
+#     + -.40 to -.69	Strong negative relationship 
+#     + -.70 or higher	Very strong negative relationship
+```
+##gambling
+#####risk taking, risk benefit and risk perception scores
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=7, cache=TRUE}
+yo <- left_join(gamble, invest, by = "unique_id") %>%
+        select(risk_taking = finRT_sum_G, risk_benefit = finRB_sum_G, 
+               risk_perception = finRP_sum_G, dohmen = dohmen.x)
+ggpairs(yo, lower=list(continuous="smooth", params=c(colour="blue")),
+        diag=list(continuous="density", params=c(colour="blue")), 
+        upper=list(params=list(corSize=5)), axisLabels='show',
+        title = "Gambling: Risk Taking/Benefits/Perception SPLOM Plot") 
+```
+
+####takeaway
+
+> risk perception and risk taking are moderately negatively correlated (-.36) i.e. the more risky someone perceives a risk, the less willing s/he is to take that risk
+
+> risk perception and risk benefit are weakly negatively correlated (-.21) i.e. the more risky someone perceives a risk, the less beneficial a s/he perceives that risk
+
+> risk benefit and risk taking are weakly positively correlated (.26) i.e. the more beneficial someone perceives a risk, the more willing s/he is to take that risk
+
+> perceived risks are a stronger predictor for **gambling** risk taking 
+
+##investment
+#####risk taking, risk benefit and risk perception scores
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=7, cache=TRUE}
+yo <- left_join(gamble, invest, by = "unique_id") %>%
+        select(risk_taking = finRT_sum_I, risk_benefit = finRB_sum_I, 
+               risk_perception = finRP_sum_I, dohmen = dohmen.x)
+ggpairs(yo, lower=list(continuous="smooth", params=c(colour="blue")),
+        diag=list(continuous="density", params=c(colour="blue")), 
+        upper=list(params=list(corSize=5)), axisLabels='show',
+        title = "Investment: Risk Taking/Benefits/Perception SPLOM Plot") 
+```
+
+
+####takeaway
+
+> risk perception and risk taking are weakly negatively correlated (-.18) i.e. the more risky someone perceives a risk, the less willing s/he is to take that risk 
+
+> risk perception and risk benefit are weakly negatively correlated (-.18) i.e. the more risky someone perceives a risk, the less beneficial s/he perceives that risk
+
+> risk benefit and risk taking are moderately positively correlated (.40) i.e. the more willing someone is to take a risk the more beneficial s/he perceives that risk  
+
+> perceived benefits are a stronger predictor for **investment** risk taking.  
+
+\
+[back to table of contents](#TOC)
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=14, fig.height=7, cache=TRUE, eval=FALSE}
+####gambling vs investment
+#####risk taking, risk benefit and risk perception scores
+yo <- left_join(gamble, invest, by = "unique_id") %>%
+        select(risk_taking_I = finRT_sum_I, risk_taking_G = finRT_sum_G, 
+               risk_benefit_I = finRB_sum_I, risk_benefit_G = finRB_sum_G, 
+               risk_perception_I = finRP_sum_I, risk_perception_G = finRP_sum_G) 
+ggpairs(yo, lower=list(continuous="smooth", params=c(colour="blue")),
+        diag=list(continuous="density", params=c(colour="blue")), 
+        upper=list(params=list(corSize=5)), axisLabels='show',
+        title = "Gamble vs Invest: Risk Taking/Benefits/Perception SPLOM Plot") 
+```
+
