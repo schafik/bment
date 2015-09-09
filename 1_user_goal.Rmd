@@ -1,0 +1,117 @@
+---
+title: "Betterment User/Goal Data"
+author: "Salah Chafik <salah@decisionsciences.columbia.edu>"
+date: "Updated `r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document:
+    toc: yes
+    number_sections: no
+    theme: cosmo
+    self_contained: no
+---
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+source("/git_repositories/bment/scripts/helper_scripts/plotting_functions.R")
+source("/git_repositories/bment/scripts/helper_scripts/load_packages.R")
+#be sure to point the below to where you source the data
+completo <- readRDS("/git_repositories/betterment/data/rds_data/userANDdospert_full.RDS")
+```
+
+#User Data
+##Demographics
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=5, cache=TRUE}
+plot_percent(completo, "user_gender", coordflippin = F) + ggtitle("histogram with percentages: \ngender") + 
+  theme(text=element_text(family="Georgia", face="bold")) 
+table(completo$user_gender, useNA = "ifany")
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=5, cache=TRUE}
+plot_hist(completo, "user_age") + ggtitle("histogram with percentages: \nage") + 
+  theme(text=element_text(family="Georgia", face="bold")) 
+summary(completo$user_age)
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=5, cache=TRUE}
+plot_hist(completo, "user_reported_net_worth", bin1 = F) + 
+  ggtitle("histogram with percentages: \nuser reported net worth") + 
+  theme(text=element_text(family="Georgia", face="bold")) + scale_x_continuous(labels = comma)
+summary(completo$user_reported_net_worth)
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=5, cache=TRUE}
+plot_hist(completo, "user_reported_annual_income", bin1 = F) + 
+  ggtitle("histogram with percentages: \nuser reported annual income") + 
+  theme(text=element_text(family="Georgia", face="bold")) + scale_x_continuous(labels = comma) 
+summary(completo$user_reported_annual_income)
+```
+
+\
+[back to table of contents](#TOC)
+
+
+#Account Data
+##Number of Accounts Per User
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=5, cache=TRUE}
+plot_percent(completo, "num_goals") + ggtitle("histogram with percentages: \nnumber of goals") + 
+  theme(text=element_text(family="Georgia", face="bold")) + scale_x_continuous(breaks=seq(0, 8, 1))
+summary(completo$num_goals)
+```
+
+##Goal Types
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=4, cache=TRUE}
+plot_percent(completo, "goal_type", coordflippin = T) + ggtitle("histogram with percentages: \ngoal type") + 
+  theme(text=element_text(family="Georgia", face="bold")) 
+table(completo$goal_type, useNA = "ifany")
+```
+
+##Current Balances
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=4, cache=TRUE}
+plot_hist(completo, "user_current_balance", bin1 = F) + ggtitle("current balance on account") + 
+  theme(text=element_text(family="Georgia", face="bold")) + scale_x_continuous(labels = comma)
+summary(completo$user_current_balance)
+```
+
+\
+[back to table of contents](#TOC)
+
+#Allocation  
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=4, cache=TRUE}
+plot_hist(completo, "allocation_stock_actual", bin1 = F) + 
+  ggtitle("actual stock allocations") + 
+  theme(text=element_text(family="Georgia", face="bold")) + scale_x_continuous(labels = comma)
+summary(completo$allocation_stock_actual)
+```
+
+##Recommendations
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=4, cache=TRUE}
+plot_hist(completo, "allocation_stock_rec", bin1 = F) + 
+  ggtitle("recommended stock allocation") + 
+  theme(text=element_text(family="Georgia", face="bold")) + scale_x_continuous(labels = comma)
+summary(completo$allocation_stock_rec)
+```
+
+##Deviation
+####positive(negative) value means a user allocated more (less) stocks than recommended
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=4, cache=TRUE}
+plot_hist(completo, "allocation_deviation", bin1 = F) + 
+  ggtitle("deviations") + 
+  theme(text=element_text(family="Georgia", face="bold")) + scale_x_continuous(labels = comma)
+summary(completo$allocation_deviation)
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=11, cache=TRUE}
+plot_hist(completo, "allocation_deviation", bin1 = F, mean = F) + 
+  ggtitle("deviations by goal type") + facet_grid(goal_type ~ .) + 
+  theme(text=element_text(family="Georgia", face="bold")) + scale_x_continuous(labels = comma)
+# ggplot(completo, aes(x=allocation_deviation, fill=goal_type)) + geom_density(alpha=.3) 
+summary(aov(allocation_deviation ~ goal_type, data=completo))
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=5, cache=TRUE}
+plot_hist(completo, "allocation_deviation", bin1 = F, mean = F) + 
+  ggtitle("deviations by gender") + facet_grid(user_gender ~ .) + 
+  theme(text=element_text(family="Georgia", face="bold")) + scale_x_continuous(labels = comma)
+summary(aov(allocation_deviation ~ user_gender, data=completo))
+```
+
+\
+[back to table of contents](#TOC)

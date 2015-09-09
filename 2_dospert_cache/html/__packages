@@ -1,0 +1,14 @@
+base
+plyr
+dplyr
+readr
+reshape2
+dospert
+ggplot2
+scales
+stringr
+GGally
+stargazer
+lubridate
+XML
+texreg
