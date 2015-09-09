@@ -7,10 +7,12 @@ output:
     toc: yes
     number_sections: no
     theme: cosmo
+    self_contained: no
 ---
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
-source("/git_repositories/bangla/scripts/helper_scripts/plotting_functions.R")
-source("/git_repositories/betterment/scripts/helper_scripts/load_packages.R")
+source("/git_repositories/bment/scripts/helper_scripts/plotting_functions.R")
+source("/git_repositories/bment/scripts/helper_scripts/load_packages.R")
+#be sure to point the below to where you source the data
 completo <- readRDS("/git_repositories/betterment/data/rds_data/userANDdospert_full.RDS")
 ```
 

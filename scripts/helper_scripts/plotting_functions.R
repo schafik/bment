@@ -1,7 +1,4 @@
 
-#plotting helper functions
-
-
 plot_percent <- function(df, var, removeNAs = T, coordflippin = F) {
   if (removeNAs == F){
     yo <- df %>% group_by_(as.name(var)) %>% 
@@ -12,11 +9,11 @@ plot_percent <- function(df, var, removeNAs = T, coordflippin = F) {
       summarize(tally = n()) #getting totals
     yo <- na.omit(yo) #removing NAs
     yo <- mutate(yo, percent = round(tally/sum(tally), digits=2))}  
-  
+
   if (coordflippin == F){
-    ggplot(data = yo, aes_string(x=var, y = "tally")) + 
-      geom_bar(stat="identity", colour = "black", fill = "#F0E442") + ylab("count")+
-      geom_text(stat="identity", aes_string(label="percent", vjust=-.1))}
+  ggplot(data = yo, aes_string(x=var, y = "tally")) + 
+    geom_bar(stat="identity", colour = "black", fill = "#F0E442") + ylab("count")+
+    geom_text(stat="identity", aes_string(label="percent", vjust=-.1))}
   else if (coordflippin == T){
     ggplot(data = yo, aes_string(x=var, y = "tally")) +
       geom_bar(stat="identity", colour = "black", fill = "#F0E442") + ylab("count") +
@@ -57,17 +54,38 @@ plot_percent2 <- function(df, var1, var2, removeNAs = F,
 }
 
 
-plot_hist <- function(df, var, mean = T) {
-  if (mean == T){
+plot_hist <- function(df, var, mean = T, bin1 = T) {
+  if (mean == T & bin1 == T){
+  numero <- df %>% #getting mean
+      summarize_(promedio = mean(get(var, 
+                  envir=as.environment(df)), na.rm = T))
+  numero <- as.character(numero[[1]])
+  ggplot(df, aes_string(x=var)) + 
+    geom_histogram(colour="black", fill = "#F0E442", binwidth = 1) +
+    geom_vline(aes_string(xintercept=numero),   
+               color="black", linetype="dashed", size=.5)}
+  else if (mean == T & bin1 == F){
     numero <- df %>% #getting mean
       summarize_(promedio = mean(get(var, 
                                      envir=as.environment(df)), na.rm = T))
     numero <- as.character(numero[[1]])
     ggplot(df, aes_string(x=var)) + 
-      geom_histogram(colour="black", fill = "#F0E442", binwidth = 1) +
+      geom_histogram(colour="black", fill = "#F0E442") +
       geom_vline(aes_string(xintercept=numero),   
                  color="black", linetype="dashed", size=.5)}
-  else if (mean == F){
+  else if (mean == F & bin1 == T){
     ggplot(df, aes_string(x=var)) + 
       geom_histogram(colour="black", fill = "#F0E442", binwidth = 1)}
+  else if (mean == F & bin1 == F){
+    ggplot(df, aes_string(x=var)) + 
+      geom_histogram(colour="black", fill = "#F0E442")}
 }
+
+
+create_NA <- function(var) {
+  facts <- c(make.unique(levels(factor(var))), "NA")  
+  factor(ifelse((!is.na(var)), var, "NA"), levels = facts)
+}
+
+
+

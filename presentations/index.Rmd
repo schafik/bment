@@ -10,7 +10,7 @@ output:
 
 ####Betterment Data
 
-  * [User + Goal Data](https://vlab.decisionsciences.columbia.edu/salah/user_goal_ii.html)
+  * [User + Goal Data](http://schafik.github.io/bangla/user_goal.html)
 
 ####DOSPERT Data
 
