@@ -11,13 +11,13 @@
 <meta name="author" content="Salah Chafik salah@decisionsciences.columbia.edu" />
 
 
-<title>DOSPERT &amp; Betterment User Data: Predicting Allocation Deviation</title>
+<title>DOSPERT &amp; Betterment User Data: Further Regressions</title>
 
-<script src="4_predicting_files/jquery-1.11.0/jquery.min.js"></script>
+<script src="5_beyond_OLS_files/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<script src="4_predicting_files/bootstrap-3.3.1/js/bootstrap.min.js"></script>
-<script src="4_predicting_files/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
-<script src="4_predicting_files/bootstrap-3.3.1/shim/respond.min.js"></script>
+<script src="5_beyond_OLS_files/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="5_beyond_OLS_files/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="5_beyond_OLS_files/bootstrap-3.3.1/shim/respond.min.js"></script>
 <style type="text/css">
 @font-face {
   font-family: 'Source Sans Pro';
@@ -49,9 +49,9 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <link rel="stylesheet"
-      href="4_predicting_files/highlight/default.css"
+      href="5_beyond_OLS_files/highlight/default.css"
       type="text/css" />
-<script src="4_predicting_files/highlight/highlight.js"></script>
+<script src="5_beyond_OLS_files/highlight/highlight.js"></script>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
@@ -90,30 +90,37 @@ img {
 
 
 <div id="header">
-<h1 class="title">DOSPERT &amp; Betterment User Data: Predicting Allocation Deviation</h1>
+<h1 class="title">DOSPERT &amp; Betterment User Data: Further Regressions</h1>
 <h4 class="author"><em>Salah Chafik <a href="mailto:salah@decisionsciences.columbia.edu">salah@decisionsciences.columbia.edu</a></em></h4>
 <h4 class="date"><em>Updated 16 September, 2015</em></h4>
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#allocation-deviation">Allocation Deviation</a></li>
-<li><a href="#allocation-deviation-by-goal-type">Allocation Deviation: by goal type</a></li>
-<li><a href="#allocation-deviation-by-dospert-sub-scales">Allocation Deviation: by DOSPERT sub-scales</a></li>
-<li><a href="#allocation-deviation-by-dohmen">Allocation Deviation: by Dohmen</a></li>
-<li><a href="#allocation-deviation-by-dospert-sub-scales-dohmen">Allocation Deviation: by DOSPERT sub-scales + Dohmen</a></li>
-<li><a href="#allocation-deviation-combining-risk-taking-predictors">Allocation Deviation: combining risk taking predictors</a></li>
+<li><a href="#allocation">allocation</a><ul>
+<li><a href="#ols-regression">OLS regression</a></li>
+<li><a href="#truncated-regression">truncated regression</a></li>
+<li><a href="#tobitcensored-regression">tobit/censored regression</a></li>
+<li><a href="#arcsin-transformation">arcsin transformation</a></li>
+<li><a href="#fractional-logit-model">fractional logit model</a></li>
+<li><a href="#beta-regression">beta regression</a></li>
+</ul></li>
+<li><a href="#allocation-deviation">allocation deviation</a><ul>
+<li><a href="#ols-regression-1">OLS regression</a></li>
+<li><a href="#arcsin-transformation-1">arcsin transformation ??</a></li>
+<li><a href="#logit">logit</a></li>
+</ul></li>
 </ul>
 </div>
 
-<div id="allocation-deviation" class="section level1">
-<h1>Allocation Deviation</h1>
-<div id="using-deviation-between-actual-and-recommended-allocation-as-the-dependent-variable-we-examine-three-significant-explanatory-variables-dospert-hypothetical-risk-taking-dospert-beta-score-risk-attitude-and-dohmen-self-reported-risk" class="section level5">
-<h5>using deviation (between actual and recommended allocation) as the dependent variable, we examine three significant explanatory variables: DOSPERT hypothetical risk taking, DOSPERT beta score (risk attitude), and Dohmen self reported risk</h5>
+<div id="allocation" class="section level1">
+<h1>allocation</h1>
+<div id="ols-regression" class="section level2">
+<h2>OLS regression</h2>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <table cellspacing="0" align="center" style="border: none;">
 <caption align="top" style="margin-bottom:0.3em;">
-Allocation Deviation: controling for recommendation
+Allocation: OLS Regression
 </caption>
 <tr>
 <th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
@@ -183,13 +190,13 @@ DOSPERT_riskTaking
 allocation_stock_rec
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>-0.4363</b><sup style="vertical-align: 0px;">***</sup>
+<b>0.5637</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>-0.4353</b><sup style="vertical-align: 0px;">***</sup>
+<b>0.5647</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>-0.4300</b><sup style="vertical-align: 0px;">***</sup>
+<b>0.5700</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 </tr>
 <tr>
@@ -256,13 +263,13 @@ dohmen
 R<sup style="vertical-align: 0px;">2</sup>
 </td>
 <td style="border-top: 1px solid black;">
-0.2893
+0.4151
 </td>
 <td style="border-top: 1px solid black;">
-0.2857
+0.4010
 </td>
 <td style="border-top: 1px solid black;">
-0.2833
+0.4102
 </td>
 </tr>
 <tr>
@@ -270,13 +277,13 @@ R<sup style="vertical-align: 0px;">2</sup>
 Adj. R<sup style="vertical-align: 0px;">2</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-0.2854
+0.4120
 </td>
 <td style="padding-right: 12px; border: none;">
-0.2818
+0.3977
 </td>
 <td style="padding-right: 12px; border: none;">
-0.2793
+0.4069
 </td>
 </tr>
 <tr>
@@ -313,58 +320,35 @@ RMSE
 </td>
 </tr>
 </table>
-<ul>
-<li><strong>model 1</strong>
-<ul>
-<li>lm(deviation ~ <strong>DOSPERT risk taking</strong> + recommended allocation)</li>
-</ul></li>
-</ul>
-<blockquote>
-<p><strong>for a one unit increase in DOSPERT hypothetical risk taking, there is a .58 percentage point increase in user allocation deviation (i.e. an increase in stock allocation above the recommended amount). </strong></p>
-</blockquote>
-<ul>
-<li><strong>model 2</strong>
-<ul>
-<li>lm(deviation ~ <strong>DOSPERT beta</strong> + recommended allocation)</li>
-</ul></li>
-</ul>
-<blockquote>
-<p><strong>for a one unit increase in DOSPERT Beta value (more risk seeking behavior), there is a 2 percentage point increase in user allocation deviation</strong></p>
-</blockquote>
-<ul>
-<li><strong>model 3</strong>
-<ul>
-<li>lm(deviation ~ <strong>dohmen</strong> + recommended allocation)</li>
-</ul></li>
-</ul>
-<blockquote>
-<p><strong>for a one unit increase in dohmen self reported risk, there is a 1.31 percentage point increase in user allocation deviation</strong></p>
-</blockquote>
 </div>
-<div id="scatterplot-matrix-splom-plot" class="section level4">
-<h4>scatterplot matrix (SPLOM) plot</h4>
-<p><img src="4_predicting_files/figure-html/unnamed-chunk-3-1.png" title="" alt="" width="1344" /></p>
+<div id="truncated-regression" class="section level2">
+<h2>truncated regression</h2>
 <blockquote>
-<p>no significant correlations between allocation deviation and three explanatory variables</p>
+<p>this technique is utilized when data for the outcome variable is only available for part of the sample (i.e. truncated sample).</p>
 </blockquote>
-<p><br />
-<a href="#TOC">back to table of contents</a></p>
-</div>
-</div>
-<div id="allocation-deviation-by-goal-type" class="section level1">
-<h1>Allocation Deviation: by goal type</h1>
-<div id="as-seen-previously-goal-type-is-significant-as-a-predictive-variable" class="section level4">
-<h4><a href="https://vlab.decisionsciences.columbia.edu/salah/user_goal_ii.html#deviations">as seen previously</a>, goal type is significant as a predictive variable:</h4>
-<pre><code>##              Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-## goal_type     7  3.025  0.4322    13.3 2.79e-15 ***
-## Residuals   362 11.765  0.0325                     
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 276 observations deleted due to missingness</code></pre>
+<ul>
+<li>likely not the case for our study</li>
+</ul>
+<p>Call: truncreg(formula = allocation_stock_actual ~ DOSPERT_riskTaking + allocation_stock_rec, data = full_data, point = 1, direction = “right”)</p>
+<p>Coefficients : Estimate Std. Error t-value Pr(&gt;|t|)<br />
+(Intercept) 0.0276240 0.0767583 0.3599 0.718935<br />
+DOSPERT_riskTaking 0.0102293 0.0035103 2.9141 0.003567 ** allocation_stock_rec 0.9912274 0.0917027 10.8091 &lt; 2.2e-16 <strong><em> sigma 0.2198102 0.0134112 16.3901 &lt; 2.2e-16 </em></strong> — Signif. codes: 0 ‘<em><strong>’ 0.001 ’</strong>’ 0.01 ’</em>’ 0.05 ‘.’ 0.1 ‘’ 1</p>
+<p>Log-Likelihood: 207.11 on 4 Df</p>
+<p>Call: truncreg(formula = allocation_stock_actual ~ beta + allocation_stock_rec, data = full_data, point = 1, direction = “right”)</p>
+<p>Coefficients : Estimate Std. Error t-value Pr(&gt;|t|)<br />
+(Intercept) 0.232192 0.044098 5.2654 1.399e-07 <strong><em> beta 0.035142 0.017563 2.0009 0.0454 </em><br />
+allocation_stock_rec 1.012469 0.095943 10.5528 &lt; 2.2e-16 </strong><em> sigma 0.223051 0.013925 16.0186 &lt; 2.2e-16 </em>** — Signif. codes: 0 ‘<em><strong>’ 0.001 ’</strong>’ 0.01 ’</em>’ 0.05 ‘.’ 0.1 ‘’ 1</p>
+<p>Log-Likelihood: 202.25 on 4 Df</p>
+<p>Call: truncreg(formula = allocation_stock_actual ~ dohmen + allocation_stock_rec, data = full_data, point = 1, direction = “right”)</p>
+<p>Coefficients : Estimate Std. Error t-value Pr(&gt;|t|)<br />
+(Intercept) 0.0744940 0.0732039 1.0176 0.30886<br />
+dohmen 0.0221172 0.0096958 2.2811 0.02254 *<br />
+allocation_stock_rec 1.0070158 0.0932641 10.7975 &lt; 2e-16 <strong><em> sigma 0.2214692 0.0135928 16.2931 &lt; 2e-16 </em></strong> — Signif. codes: 0 ‘<em><strong>’ 0.001 ’</strong>’ 0.01 ’</em>’ 0.05 ‘.’ 0.1 ‘’ 1</p>
+<p>Log-Likelihood: 205.28 on 4 Df</p>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <table cellspacing="0" align="center" style="border: none;">
 <caption align="top" style="margin-bottom:0.3em;">
-Allocation Deviation: by goal type
+Allocation Deviation: Truncated Regression
 </caption>
 <tr>
 <th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
@@ -384,26 +368,26 @@ Allocation Deviation: by goal type
 (Intercept)
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.2532</b><sup style="vertical-align: 0px;">***</sup>
+0.0276
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.3793</b><sup style="vertical-align: 0px;">***</sup>
+<b>0.2322</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.2873</b><sup style="vertical-align: 0px;">***</sup>
+0.0745
 </td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0484)
+(0.0768)
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0346)
+(0.0441)
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0459)
+(0.0732)
 </td>
 </tr>
 <tr>
@@ -411,7 +395,7 @@ Allocation Deviation: by goal type
 DOSPERT_riskTaking
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.0056</b><sup style="vertical-align: 0px;">**</sup>
+<b>0.0102</b><sup style="vertical-align: 0px;">**</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
 </td>
@@ -422,7 +406,7 @@ DOSPERT_riskTaking
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0019)
+(0.0035)
 </td>
 <td style="padding-right: 12px; border: none;">
 </td>
@@ -434,94 +418,481 @@ DOSPERT_riskTaking
 allocation_stock_rec
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>-0.5056</b><sup style="vertical-align: 0px;">***</sup>
+<b>0.9912</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>-0.5219</b><sup style="vertical-align: 0px;">***</sup>
+<b>1.0125</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>-0.5122</b><sup style="vertical-align: 0px;">***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0654)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0663)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0659)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-goal_typeBABY_KIDS
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0069
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0134
-</td>
-<td style="padding-right: 12px; border: none;">
--0.0072
+<b>1.0070</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0682)
+(0.0917)
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0686)
+(0.0959)
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0691)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-goal_typeBUILD_WEALTH
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0392
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0443
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0456
+(0.0933)
 </td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">
+sigma
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0442)
+<b>0.2198</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0449)
+<b>0.2231</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0444)
+<b>0.2215</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">
-goal_typeEDUCATION
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.1105</b><sup style="vertical-align: 0px;">*</sup>
+(0.0134)
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.1203</b><sup style="vertical-align: 0px;">**</sup>
+(0.0139)
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.1084</b><sup style="vertical-align: 0px;">*</sup>
+(0.0136)
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+beta
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.0351</b><sup style="vertical-align: 0px;">*</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0176)
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+dohmen
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.0221</b><sup style="vertical-align: 0px;">*</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0097)
+</td>
+</tr>
+<tr>
+<td style="border-top: 1px solid black;">
+R<sup style="vertical-align: 0px;">2</sup>
+</td>
+<td style="border-top: 1px solid black;">
+0.4165
+</td>
+<td style="border-top: 1px solid black;">
+0.4031
+</td>
+<td style="border-top: 1px solid black;">
+0.4117
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Adj. R<sup style="vertical-align: 0px;">2</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+0.4117
+</td>
+<td style="padding-right: 12px; border: none;">
+0.3982
+</td>
+<td style="padding-right: 12px; border: none;">
+0.4069
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Num. obs.
+</td>
+<td style="padding-right: 12px; border: none;">
+370
+</td>
+<td style="padding-right: 12px; border: none;">
+365
+</td>
+<td style="padding-right: 12px; border: none;">
+370
+</td>
+</tr>
+<tr>
+<td style="border-bottom: 2px solid black;">
+RMSE
+</td>
+<td style="border-bottom: 2px solid black;">
+0.1693
+</td>
+<td style="border-bottom: 2px solid black;">
+0.1703
+</td>
+<td style="border-bottom: 2px solid black;">
+0.1700
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;" colspan="4">
+<span style="font-size:0.8em"><sup style="vertical-align: 0px;"><em><strong></sup>p &lt; 0.001, <sup style="vertical-align: 0px;"></strong></sup style="vertical-align: 0px;">p &lt; 0.01, <sup style="vertical-align: 0px;"></em></sup>p &lt; 0.05, <sup style="vertical-align: 0px;">·</sup>p &lt; 0.1</span>
+</td>
+</tr>
+</table>
+<p><br />
+<a href="#TOC">back to table of contents</a></p>
+</div>
+<div id="tobitcensored-regression" class="section level2">
+<h2>tobit/censored regression</h2>
+<blockquote>
+<p>technique used when true value of outcome variable is not available because of some restriction (i.e. censored)</p>
+</blockquote>
+<ul>
+<li>useful for us since some users could want 110% or -10% stock allocation</li>
+</ul>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<table cellspacing="0" align="center" style="border: none;">
+<caption align="top" style="margin-bottom:0.3em;">
+Allocation: Tobit (Censored) Regression
+</caption>
+<tr>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+</th>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+<b>Model 1</b>
+</th>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+<b>Model 2</b>
+</th>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+<b>Model 3</b>
+</th>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+(Intercept)
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.2371</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.3748</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.2667</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0450)
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0267)
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0437)
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+DOSPERT_riskTaking
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.0067</b><sup style="vertical-align: 0px;">**</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0021)
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+allocation_stock_rec
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.5716</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.5733</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.5786</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0383)
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0388)
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0383)
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+logSigma
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>-1.7262</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>-1.7179</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>-1.7214</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0386)
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0389)
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0386)
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+beta
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.0204</b><sup style="vertical-align: 0px;">·</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0114)
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+dohmen
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.0149</b><sup style="vertical-align: 0px;">*</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0059)
+</td>
+</tr>
+<tr>
+<td style="border-top: 1px solid black;">
+AIC
+</td>
+<td style="border-top: 1px solid black;">
+-147.2727
+</td>
+<td style="border-top: 1px solid black;">
+-137.1262
+</td>
+<td style="border-top: 1px solid black;">
+-143.3949
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+BIC
+</td>
+<td style="padding-right: 12px; border: none;">
+-131.6187
+</td>
+<td style="padding-right: 12px; border: none;">
+-121.5266
+</td>
+<td style="padding-right: 12px; border: none;">
+-127.7409
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Log Likelihood
+</td>
+<td style="padding-right: 12px; border: none;">
+77.6363
+</td>
+<td style="padding-right: 12px; border: none;">
+72.5631
+</td>
+<td style="padding-right: 12px; border: none;">
+75.6974
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Num. obs.
+</td>
+<td style="padding-right: 12px; border: none;">
+370
+</td>
+<td style="padding-right: 12px; border: none;">
+365
+</td>
+<td style="padding-right: 12px; border: none;">
+370
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Left-censored
+</td>
+<td style="padding-right: 12px; border: none;">
+0
+</td>
+<td style="padding-right: 12px; border: none;">
+0
+</td>
+<td style="padding-right: 12px; border: none;">
+0
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Uncensored
+</td>
+<td style="padding-right: 12px; border: none;">
+346
+</td>
+<td style="padding-right: 12px; border: none;">
+341
+</td>
+<td style="padding-right: 12px; border: none;">
+346
+</td>
+</tr>
+<tr>
+<td style="border-bottom: 2px solid black;">
+Right-censored
+</td>
+<td style="border-bottom: 2px solid black;">
+24
+</td>
+<td style="border-bottom: 2px solid black;">
+24
+</td>
+<td style="border-bottom: 2px solid black;">
+24
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;" colspan="4">
+<span style="font-size:0.8em"><sup style="vertical-align: 0px;"><em><strong></sup>p &lt; 0.001, <sup style="vertical-align: 0px;"></strong></sup style="vertical-align: 0px;">p &lt; 0.01, <sup style="vertical-align: 0px;"></em></sup>p &lt; 0.05, <sup style="vertical-align: 0px;">·</sup>p &lt; 0.1</span>
+</td>
+</tr>
+</table>
+<p><br />
+<a href="#TOC">back to table of contents</a></p>
+</div>
+<div id="arcsin-transformation" class="section level2">
+<h2>arcsin transformation</h2>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<table cellspacing="0" align="center" style="border: none;">
+<caption align="top" style="margin-bottom:0.3em;">
+Allocation: Arcsin Transformation
+</caption>
+<tr>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+</th>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+<b>Model 1</b>
+</th>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+<b>Model 2</b>
+</th>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+<b>Model 3</b>
+</th>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+(Intercept)
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.0894</b><sup style="vertical-align: 0px;">*</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.2353</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.1204</b><sup style="vertical-align: 0px;">**</sup>
 </td>
 </tr>
 <tr>
@@ -531,118 +902,60 @@ goal_typeEDUCATION
 (0.0436)
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0448)
+(0.0264)
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0439)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-goal_typeHOUSE
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0620</b><sup style="vertical-align: 0px;">·</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0559
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0576</b><sup style="vertical-align: 0px;">·</sup>
+(0.0428)
 </td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">
+DOSPERT_riskTaking
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0346)
+<b>0.0073</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0349)
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0347)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-goal_typeOTHER
-</td>
-<td style="padding-right: 12px; border: none;">
--0.0083
-</td>
-<td style="padding-right: 12px; border: none;">
--0.0067
-</td>
-<td style="padding-right: 12px; border: none;">
--0.0103
 </td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0291)
+(0.0020)
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0295)
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0292)
 </td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">
-goal_typePURCHASE
+allocation_stock_rec
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.1007</b><sup style="vertical-align: 0px;">**</sup>
+<b>0.5138</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.0980</b><sup style="vertical-align: 0px;">**</sup>
+<b>0.5189</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.0960</b><sup style="vertical-align: 0px;">**</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0336)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0339)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0339)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-goal_typeRETIREMENT
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0907</b><sup style="vertical-align: 0px;">*</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.1039</b><sup style="vertical-align: 0px;">*</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0973</b><sup style="vertical-align: 0px;">*</sup>
+<b>0.5218</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0425)
+(0.0374)
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0429)
+(0.0382)
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0426)
+(0.0376)
 </td>
 </tr>
 <tr>
@@ -652,7 +965,7 @@ beta
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.0211</b><sup style="vertical-align: 0px;">*</sup>
+<b>0.0191</b><sup style="vertical-align: 0px;">·</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
 </td>
@@ -663,7 +976,7 @@ beta
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0105)
+(0.0112)
 </td>
 <td style="padding-right: 12px; border: none;">
 </td>
@@ -677,7 +990,7 @@ dohmen
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.0122</b><sup style="vertical-align: 0px;">*</sup>
+<b>0.0164</b><sup style="vertical-align: 0px;">**</sup>
 </td>
 </tr>
 <tr>
@@ -688,7 +1001,7 @@ dohmen
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0056)
+(0.0058)
 </td>
 </tr>
 <tr>
@@ -696,13 +1009,13 @@ dohmen
 R<sup style="vertical-align: 0px;">2</sup>
 </td>
 <td style="border-top: 1px solid black;">
-0.3311
+0.3648
 </td>
 <td style="border-top: 1px solid black;">
-0.3289
+0.3419
 </td>
 <td style="border-top: 1px solid black;">
-0.3242
+0.3564
 </td>
 </tr>
 <tr>
@@ -710,13 +1023,13 @@ R<sup style="vertical-align: 0px;">2</sup>
 Adj. R<sup style="vertical-align: 0px;">2</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-0.3144
+0.3614
 </td>
 <td style="padding-right: 12px; border: none;">
-0.3119
+0.3382
 </td>
 <td style="padding-right: 12px; border: none;">
-0.3074
+0.3529
 </td>
 </tr>
 <tr>
@@ -738,13 +1051,13 @@ Num. obs.
 RMSE
 </td>
 <td style="border-bottom: 2px solid black;">
-0.1658
+0.1750
 </td>
 <td style="border-bottom: 2px solid black;">
-0.1667
+0.1778
 </td>
 <td style="border-bottom: 2px solid black;">
-0.1666
+0.1762
 </td>
 </tr>
 <tr>
@@ -753,471 +1066,15 @@ RMSE
 </td>
 </tr>
 </table>
-<blockquote>
-<p><strong>while users generally allocate more stocks than advised, they do more so for <code>education</code>, <code>house</code>, <code>purchase</code>, and <code>retirement</code> goal types, relative to the emergency goal type baseline. this is true of our 3 risk taking predictors (DOSPERT risk taking, Dospert beta and dohmen) when controlling for recommended allocation. </strong></p>
-</blockquote>
 <p><br />
 <a href="#TOC">back to table of contents</a></p>
 </div>
-</div>
-<div id="allocation-deviation-by-dospert-sub-scales" class="section level1">
-<h1>Allocation Deviation: by DOSPERT sub-scales</h1>
+<div id="fractional-logit-model" class="section level2">
+<h2>fractional logit model</h2>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <table cellspacing="0" align="center" style="border: none;">
 <caption align="top" style="margin-bottom:0.3em;">
-Allocation Deviation: by DOSPERT sub-scales
-</caption>
-<tr>
-<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
-</th>
-<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
-<b>Model 1</b>
-</th>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-(Intercept)
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.2076</b><sup style="vertical-align: 0px;">***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0498)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-DOSPERT_riskTaking_G
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0023
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0028)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-DOSPERT_riskTaking_I
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0103</b><sup style="vertical-align: 0px;">**</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0032)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-allocation_stock_rec
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>-0.4350</b><sup style="vertical-align: 0px;">***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0362)
-</td>
-</tr>
-<tr>
-<td style="border-top: 1px solid black;">
-R<sup style="vertical-align: 0px;">2</sup>
-</td>
-<td style="border-top: 1px solid black;">
-0.2949
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-Adj. R<sup style="vertical-align: 0px;">2</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-0.2891
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-Num. obs.
-</td>
-<td style="padding-right: 12px; border: none;">
-369
-</td>
-</tr>
-<tr>
-<td style="border-bottom: 2px solid black;">
-RMSE
-</td>
-<td style="border-bottom: 2px solid black;">
-0.1690
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;" colspan="2">
-<span style="font-size:0.8em"><sup style="vertical-align: 0px;"><em><strong></sup>p &lt; 0.001, <sup style="vertical-align: 0px;"></strong></sup style="vertical-align: 0px;">p &lt; 0.01, <sup style="vertical-align: 0px;"></em></sup>p &lt; 0.05, <sup style="vertical-align: 0px;">·</sup>p &lt; 0.1</span>
-</td>
-</tr>
-</table>
-<ul>
-<li><strong>model 1</strong>
-<ul>
-<li>lm(deviation ~ <strong>DOSPERT risk taking: gamble</strong> + <strong>DOSPERT risk taking: invest</strong> + recommended allocation)</li>
-</ul></li>
-</ul>
-<blockquote>
-<p><strong>investment is the more predictive portion of the DOSPERT scale.</strong></p>
-</blockquote>
-<p><br />
-<a href="#TOC">back to table of contents</a></p>
-</div>
-<div id="allocation-deviation-by-dohmen" class="section level1">
-<h1>Allocation Deviation: by Dohmen</h1>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<table cellspacing="0" align="center" style="border: none;">
-<caption align="top" style="margin-bottom:0.3em;">
-Allocation Deviation: by Dohmen
-</caption>
-<tr>
-<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
-</th>
-<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
-<b>Model 1</b>
-</th>
-<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
-<b>Model 2</b>
-</th>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-(Intercept)
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.2169</b><sup style="vertical-align: 0px;">***</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.2996</b><sup style="vertical-align: 0px;">***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0484)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0422)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-DOSPERT_riskTaking
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0048</b><sup style="vertical-align: 0px;">*</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0021)
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-dohmen
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0089
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0124</b><sup style="vertical-align: 0px;">*</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0058)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0056)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-allocation_stock_rec
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>-0.4364</b><sup style="vertical-align: 0px;">***</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>-0.4374</b><sup style="vertical-align: 0px;">***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0361)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0364)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-beta
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0189</b><sup style="vertical-align: 0px;">·</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0107)
-</td>
-</tr>
-<tr>
-<td style="border-top: 1px solid black;">
-R<sup style="vertical-align: 0px;">2</sup>
-</td>
-<td style="border-top: 1px solid black;">
-0.2939
-</td>
-<td style="border-top: 1px solid black;">
-0.2953
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-Adj. R<sup style="vertical-align: 0px;">2</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-0.2881
-</td>
-<td style="padding-right: 12px; border: none;">
-0.2894
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-Num. obs.
-</td>
-<td style="padding-right: 12px; border: none;">
-370
-</td>
-<td style="padding-right: 12px; border: none;">
-365
-</td>
-</tr>
-<tr>
-<td style="border-bottom: 2px solid black;">
-RMSE
-</td>
-<td style="border-bottom: 2px solid black;">
-0.1689
-</td>
-<td style="border-bottom: 2px solid black;">
-0.1694
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;" colspan="3">
-<span style="font-size:0.8em"><sup style="vertical-align: 0px;"><em><strong></sup>p &lt; 0.001, <sup style="vertical-align: 0px;"></strong></sup style="vertical-align: 0px;">p &lt; 0.01, <sup style="vertical-align: 0px;"></em></sup>p &lt; 0.05, <sup style="vertical-align: 0px;">·</sup>p &lt; 0.1</span>
-</td>
-</tr>
-</table>
-<ul>
-<li><strong>model 1</strong>
-<ul>
-<li>lm(deviation ~ <strong>DOSPERT risk taking</strong> + dohmen + recommended allocation)</li>
-</ul></li>
-</ul>
-<blockquote>
-<p>no difference after inclusion of dohmen</p>
-</blockquote>
-<ul>
-<li><strong>model 2</strong>
-<ul>
-<li>lm(deviation ~ <strong>DOSPERT beta</strong> + dohmen + recommended allocation)</li>
-</ul></li>
-</ul>
-<blockquote>
-<p>estimate is smaller and p-val is higher (.059 to .078) after inclusion of dohmen</p>
-</blockquote>
-<p><br />
-<a href="#TOC">back to table of contents</a></p>
-</div>
-<div id="allocation-deviation-by-dospert-sub-scales-dohmen" class="section level1">
-<h1>Allocation Deviation: by DOSPERT sub-scales + Dohmen</h1>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<table cellspacing="0" align="center" style="border: none;">
-<caption align="top" style="margin-bottom:0.3em;">
-Allocation Deviation: by DOSPERT sub-scales + Dohmen
-</caption>
-<tr>
-<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
-</th>
-<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
-<b>Model 1</b>
-</th>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-(Intercept)
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.1787</b><sup style="vertical-align: 0px;">**</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0540)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-DOSPERT_riskTaking_G
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0018
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0028)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-DOSPERT_riskTaking_I
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0090</b><sup style="vertical-align: 0px;">**</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0034)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-dohmen
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0081
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0059)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-allocation_stock_rec
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>-0.4356</b><sup style="vertical-align: 0px;">***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0362)
-</td>
-</tr>
-<tr>
-<td style="border-top: 1px solid black;">
-R<sup style="vertical-align: 0px;">2</sup>
-</td>
-<td style="border-top: 1px solid black;">
-0.2985
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-Adj. R<sup style="vertical-align: 0px;">2</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-0.2908
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-Num. obs.
-</td>
-<td style="padding-right: 12px; border: none;">
-369
-</td>
-</tr>
-<tr>
-<td style="border-bottom: 2px solid black;">
-RMSE
-</td>
-<td style="border-bottom: 2px solid black;">
-0.1688
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;" colspan="2">
-<span style="font-size:0.8em"><sup style="vertical-align: 0px;"><em><strong></sup>p &lt; 0.001, <sup style="vertical-align: 0px;"></strong></sup style="vertical-align: 0px;">p &lt; 0.01, <sup style="vertical-align: 0px;"></em></sup>p &lt; 0.05, <sup style="vertical-align: 0px;">·</sup>p &lt; 0.1</span>
-</td>
-</tr>
-</table>
-<ul>
-<li><strong>model 1</strong>
-<ul>
-<li>lm(deviation ~ <strong>DOSPERT risk taking: gamble</strong> + <strong>DOSPERT risk taking: invest</strong> + dohmen + recommended allocation)</li>
-</ul></li>
-</ul>
-<blockquote>
-<p>effect size decreased and p-value increased (.001 to .008) by inclusion of dohmen</p>
-</blockquote>
-<p><br />
-<a href="#TOC">back to table of contents</a></p>
-</div>
-<div id="allocation-deviation-combining-risk-taking-predictors" class="section level1">
-<h1>Allocation Deviation: combining risk taking predictors</h1>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<table cellspacing="0" align="center" style="border: none;">
-<caption align="top" style="margin-bottom:0.3em;">
-Allocation Deviation: Combining Risk Taking Predictors
+Allocation: Fractional Logit
 </caption>
 <tr>
 <th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
@@ -1231,50 +1088,32 @@ Allocation Deviation: Combining Risk Taking Predictors
 <th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
 <b>Model 3</b>
 </th>
-<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
-<b>Model 4</b>
-</th>
-<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
-<b>Model 5</b>
-</th>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">
 (Intercept)
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.2478</b><sup style="vertical-align: 0px;">***</sup>
+<b>-1.4029</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.2605</b><sup style="vertical-align: 0px;">***</sup>
+<b>-0.7521</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.3001</b><sup style="vertical-align: 0px;">**</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.2446</b><sup style="vertical-align: 0px;">***</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.1842</b><sup style="vertical-align: 0px;">*</sup>
+<b>-1.2569</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0503)
+(0.2147)
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0551)
+(0.1202)
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0925)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0557)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0842)
+(0.2057)
 </td>
 </tr>
 <tr>
@@ -1282,116 +1121,22 @@ Allocation Deviation: Combining Risk Taking Predictors
 DOSPERT_riskTaking
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.0039</b><sup style="vertical-align: 0px;">·</sup>
+<b>0.0315</b><sup style="vertical-align: 0px;">**</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>0.0038</b><sup style="vertical-align: 0px;">·</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-0.0017
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0040</b><sup style="vertical-align: 0px;">·</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0035</b><sup style="vertical-align: 0px;">·</sup>
 </td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0021)
+(0.0102)
 </td>
-<td style="padding-right: 12px; border: none;">
-(0.0021)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0045)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0020)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0021)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-beta
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0166
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0174</b><sup style="vertical-align: 0px;">·</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0176</b><sup style="vertical-align: 0px;">·</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0079
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0188</b><sup style="vertical-align: 0px;">·</sup>
-</td>
-</tr>
-<tr>
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0107)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0105)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0106)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0172)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0106)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-dohmen
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0091
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0081
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0086
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0084
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0211</b><sup style="vertical-align: 0px;">·</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0058)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0058)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0059)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0058)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0122)
 </td>
 </tr>
 <tr>
@@ -1399,311 +1144,36 @@ dohmen
 allocation_stock_rec
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>-0.4418</b><sup style="vertical-align: 0px;">***</sup>
+<b>2.9521</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>-0.5246</b><sup style="vertical-align: 0px;">***</sup>
+<b>2.9650</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-<b>-0.5306</b><sup style="vertical-align: 0px;">***</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>-0.5107</b><sup style="vertical-align: 0px;">***</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>-0.5078</b><sup style="vertical-align: 0px;">***</sup>
+<b>2.9795</b><sup style="vertical-align: 0px;">***</sup>
 </td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0364)
+(0.1945)
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0659)
+(0.1964)
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0669)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0659)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0668)
+(0.1944)
 </td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">
-goal_typeBABY_KIDS
+beta
 </td>
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
--0.0030
-</td>
-<td style="padding-right: 12px; border: none;">
--0.1907
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0126
-</td>
-<td style="padding-right: 12px; border: none;">
--0.3135
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0687)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.4035)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.1168)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.4156)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-goal_typeBUILD_WEALTH
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0448
-</td>
-<td style="padding-right: 12px; border: none;">
-0.1105
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0490
-</td>
-<td style="padding-right: 12px; border: none;">
-0.1729
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0446)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.1377)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0482)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.1172)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-goal_typeEDUCATION
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.1150</b><sup style="vertical-align: 0px;">*</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0626
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0829
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.4189</b><sup style="vertical-align: 0px;">**</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0445)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.1743)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0511)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.1516)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-goal_typeHOUSE
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0572</b><sup style="vertical-align: 0px;">·</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0127
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.1057</b><sup style="vertical-align: 0px;">*</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0727
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0347)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.1562)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0419)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.1230)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-goal_typeOTHER
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
--0.0095
-</td>
-<td style="padding-right: 12px; border: none;">
--0.1050
-</td>
-<td style="padding-right: 12px; border: none;">
--0.0046
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0598
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0293)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.1268)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0371)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.1158)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-goal_typePURCHASE
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0947</b><sup style="vertical-align: 0px;">**</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
--0.0674
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.1562</b><sup style="vertical-align: 0px;">***</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-0.2334
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0337)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.1387)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0433)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.1617)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-goal_typeRETIREMENT
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0973</b><sup style="vertical-align: 0px;">*</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0840
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0735
-</td>
-<td style="padding-right: 12px; border: none;">
-0.1492
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0427)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.1210)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0477)
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.1126)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-DOSPERT_riskTaking:goal_typeBABY_KIDS
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0099
-</td>
-<td style="padding-right: 12px; border: none;">
+<b>0.1099</b><sup style="vertical-align: 0px;">*</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
 </td>
@@ -1714,29 +1184,21 @@ DOSPERT_riskTaking:goal_typeBABY_KIDS
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0208)
-</td>
-<td style="padding-right: 12px; border: none;">
+(0.0535)
 </td>
 <td style="padding-right: 12px; border: none;">
 </td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">
-DOSPERT_riskTaking:goal_typeBUILD_WEALTH
+dohmen
 </td>
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
--0.0033
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
+<b>0.0690</b><sup style="vertical-align: 0px;">*</sup>
 </td>
 </tr>
 <tr>
@@ -1747,735 +1209,315 @@ DOSPERT_riskTaking:goal_typeBUILD_WEALTH
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-(0.0070)
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-DOSPERT_riskTaking:goal_typeEDUCATION
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0029
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0090)
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-DOSPERT_riskTaking:goal_typeHOUSE
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0025
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0085)
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-DOSPERT_riskTaking:goal_typeOTHER
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0052
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0067)
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-DOSPERT_riskTaking:goal_typePURCHASE
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0089
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0074)
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-DOSPERT_riskTaking:goal_typeRETIREMENT
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0010
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0059)
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-beta:goal_typeBABY_KIDS
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0293
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.1429)
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-beta:goal_typeBUILD_WEALTH
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0179
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0316)
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-beta:goal_typeEDUCATION
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
--0.0492
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0418)
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-beta:goal_typeHOUSE
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.0826</b><sup style="vertical-align: 0px;">*</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0393)
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-beta:goal_typeOTHER
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0087
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0387)
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-beta:goal_typePURCHASE
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>0.1009</b><sup style="vertical-align: 0px;">*</sup>
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0449)
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-beta:goal_typeRETIREMENT
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
--0.0245
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0308)
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-dohmen:goal_typeBABY_KIDS
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-0.0375
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0546)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-dohmen:goal_typeBUILD_WEALTH
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
--0.0234
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0186)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-dohmen:goal_typeEDUCATION
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-<b>-0.0496</b><sup style="vertical-align: 0px;">*</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0236)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-dohmen:goal_typeHOUSE
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
--0.0032
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0198)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-dohmen:goal_typeOTHER
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
--0.0121
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0186)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-dohmen:goal_typePURCHASE
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
--0.0231
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0255)
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-dohmen:goal_typeRETIREMENT
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
--0.0103
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-</td>
-<td style="padding-right: 12px; border: none;">
-(0.0172)
+(0.0283)
 </td>
 </tr>
 <tr>
 <td style="border-top: 1px solid black;">
-R<sup style="vertical-align: 0px;">2</sup>
+AIC
 </td>
 <td style="border-top: 1px solid black;">
-0.3021
 </td>
 <td style="border-top: 1px solid black;">
-0.3431
 </td>
 <td style="border-top: 1px solid black;">
-0.3492
-</td>
-<td style="border-top: 1px solid black;">
-0.3682
-</td>
-<td style="border-top: 1px solid black;">
-0.3552
 </td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">
-Adj. R<sup style="vertical-align: 0px;">2</sup>
+BIC
 </td>
 <td style="padding-right: 12px; border: none;">
-0.2943
 </td>
 <td style="padding-right: 12px; border: none;">
-0.3226
 </td>
 <td style="padding-right: 12px; border: none;">
-0.3153
-</td>
-<td style="padding-right: 12px; border: none;">
-0.3354
-</td>
-<td style="padding-right: 12px; border: none;">
-0.3216
 </td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">
+Log Likelihood
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Deviance
+</td>
+<td style="padding-right: 12px; border: none;">
+55.6082
+</td>
+<td style="padding-right: 12px; border: none;">
+55.7407
+</td>
+<td style="padding-right: 12px; border: none;">
+56.1348
+</td>
+</tr>
+<tr>
+<td style="border-bottom: 2px solid black;">
 Num. obs.
 </td>
-<td style="padding-right: 12px; border: none;">
+<td style="border-bottom: 2px solid black;">
+370
+</td>
+<td style="border-bottom: 2px solid black;">
 365
 </td>
-<td style="padding-right: 12px; border: none;">
-365
-</td>
-<td style="padding-right: 12px; border: none;">
-365
-</td>
-<td style="padding-right: 12px; border: none;">
-365
-</td>
-<td style="padding-right: 12px; border: none;">
-365
+<td style="border-bottom: 2px solid black;">
+370
 </td>
 </tr>
 <tr>
-<td style="border-bottom: 2px solid black;">
-RMSE
-</td>
-<td style="border-bottom: 2px solid black;">
-0.1689
-</td>
-<td style="border-bottom: 2px solid black;">
-0.1654
-</td>
-<td style="border-bottom: 2px solid black;">
-0.1663
-</td>
-<td style="border-bottom: 2px solid black;">
-0.1639
-</td>
-<td style="border-bottom: 2px solid black;">
-0.1656
-</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;" colspan="6">
+<td style="padding-right: 12px; border: none;" colspan="4">
 <span style="font-size:0.8em"><sup style="vertical-align: 0px;"><em><strong></sup>p &lt; 0.001, <sup style="vertical-align: 0px;"></strong></sup style="vertical-align: 0px;">p &lt; 0.01, <sup style="vertical-align: 0px;"></em></sup>p &lt; 0.05, <sup style="vertical-align: 0px;">·</sup>p &lt; 0.1</span>
 </td>
 </tr>
 </table>
-<ul>
-<li><strong>model 1</strong>
-<ul>
-<li>lm(deviation ~ <strong>DOSPERT risk taking</strong> + <strong>DOSPERT beta</strong> + <strong>dohmen</strong> + recommended allocation)</li>
-</ul></li>
-</ul>
-<blockquote>
-<p><strong>for a one unit increase in DOSPERT hypothetical risk taking, there is a .39 percentage point increase in user allocation deviation (i.e. an increase in stock allocation above the recommended amount).</strong></p>
-</blockquote>
-<ul>
-<li><strong>model 2</strong>
-<ul>
-<li>lm(deviation ~ DOSPERT risk taking + DOSPERT beta + dohmen + <strong>goal type</strong> + recommended allocation)</li>
-</ul></li>
-</ul>
-<blockquote>
-<p><strong>with the inclusion of goal type in the model, the same significant relationship holds true for DOSPERT hypothetical risk taking as in Model 1. in addition, for a one unit increase in DOSPERT Beta value (more risk seeking behavior), there is a 1.74 percentage point increase in user allocation deviation. finally, users allocate more stocks for <code>education</code>, <code>house</code>, <code>purchase</code>, and <code>retirement</code> goal types, relative to the emergency goal baseline.</strong></p>
-</blockquote>
-<ul>
-<li><strong>model 3</strong>
-<ul>
-<li>lm(deviation ~ DOSPERT risk taking + DOSPERT beta + dohmen + goal type + <strong>DOSPERT risk taking</strong>X<strong>goal_type</strong> + recommended allocation)</li>
-</ul></li>
-</ul>
-<blockquote>
-<p>with the inclusion of Dospert risk taking and goal type interaction, the same significant relationship holds true for DOSPERT beta as in Model 2.</p>
-</blockquote>
-<ul>
-<li><strong>model 4</strong>
-<ul>
-<li>lm(deviation ~ DOSPERT risk taking + DOSPERT beta + dohmen + goal type + <strong>DOSPERT beta</strong>X<strong>goal_type</strong> + recommended allocation)</li>
-</ul></li>
-</ul>
-<blockquote>
-<p><strong>with the inclusion of Dospert beta and goal type interaction, the same significant relationship holds true for DOSPERT risk taking as in Models 1 + 2. in addition, for a one unit increase in DOSPERT Beta value (more risk seeking behavior), there is a 8.26/10.09 percentage point increase in user allocation deviation for <code>house</code>/<code>purchase</code> goal types.</strong> finally, users allocate more stocks for <code>house</code> and <code>purchase</code> goal types, relative to the emergency goal baseline.</p>
-</blockquote>
-<ul>
-<li><strong>model 5</strong>
-<ul>
-<li>lm(deviation ~ DOSPERT risk taking + DOSPERT beta + dohmen + goal type + <strong>dohmen</strong>X<strong>goal_type</strong> + recommended allocation)</li>
-</ul></li>
-</ul>
-<blockquote>
-<p>with the inclusion of dohmen and goal type interaction, the same significant relationship holds true for DOSPERT risk taking as in Models 1 + 2 + 4. the same significant holds true for DOSPERT beta from Models 2 + 3. in addition, users allocate more stocks for <code>education</code> goal type, relative to the emergency goal baseline. finally, for a one unit increase in dohmen, there is a 4.96 percentage point decrease in user allocation deviation for <code>education</code> goal type.</p>
-</blockquote>
 <p><br />
 <a href="#TOC">back to table of contents</a></p>
+</div>
+<div id="beta-regression" class="section level2">
+<h2>beta regression</h2>
+<blockquote>
+<p>used for data that is bounded between 0 and 1. <a href="http://www.jstatsoft.org/v34/i02/paper">see paper here</a>.</p>
+</blockquote>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<table cellspacing="0" align="center" style="border: none;">
+<caption align="top" style="margin-bottom:0.3em;">
+Allocation: Beta Regression
+</caption>
+<tr>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+</th>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+<b>Model 1</b>
+</th>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+<b>Model 2</b>
+</th>
+<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;">
+<b>Model 3</b>
+</th>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+(Intercept)
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>-1.1436</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>-0.2303</b><sup style="vertical-align: 0px;">·</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>-0.9470</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.2339)
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.1378)
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.2269)
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+DOSPERT_riskTaking
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.0464</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0110)
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+allocation_stock_rec
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>2.0263</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>2.0509</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>2.0621</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.2049)
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.2088)
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.2056)
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Precision: (phi)
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>3.8859</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>3.7149</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>3.8080</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.2719)
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.2609)
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.2660)
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+beta
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.1060</b><sup style="vertical-align: 0px;">·</sup>
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0593)
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+dohmen
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+<b>0.1047</b><sup style="vertical-align: 0px;">***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+</td>
+<td style="padding-right: 12px; border: none;">
+(0.0309)
+</td>
+</tr>
+<tr>
+<td style="border-top: 1px solid black;">
+Pseudo R<sup style="vertical-align: 0px;">2</sup>
+</td>
+<td style="border-top: 1px solid black;">
+0.2066
+</td>
+<td style="border-top: 1px solid black;">
+0.1755
+</td>
+<td style="border-top: 1px solid black;">
+0.1948
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;">
+Log Likelihood
+</td>
+<td style="padding-right: 12px; border: none;">
+170.1777
+</td>
+<td style="padding-right: 12px; border: none;">
+161.4597
+</td>
+<td style="padding-right: 12px; border: none;">
+166.7611
+</td>
+</tr>
+<tr>
+<td style="border-bottom: 2px solid black;">
+Num. obs.
+</td>
+<td style="border-bottom: 2px solid black;">
+370
+</td>
+<td style="border-bottom: 2px solid black;">
+365
+</td>
+<td style="border-bottom: 2px solid black;">
+370
+</td>
+</tr>
+<tr>
+<td style="padding-right: 12px; border: none;" colspan="4">
+<span style="font-size:0.8em"><sup style="vertical-align: 0px;"><em><strong></sup>p &lt; 0.001, <sup style="vertical-align: 0px;"></strong></sup style="vertical-align: 0px;">p &lt; 0.01, <sup style="vertical-align: 0px;"></em></sup>p &lt; 0.05, <sup style="vertical-align: 0px;">·</sup>p &lt; 0.1</span>
+</td>
+</tr>
+</table>
+<p><br />
+<a href="#TOC">back to table of contents</a></p>
+</div>
+</div>
+<div id="allocation-deviation" class="section level1">
+<h1>allocation deviation</h1>
+<div id="ols-regression-1" class="section level2">
+<h2>OLS regression</h2>
+</div>
+<div id="arcsin-transformation-1" class="section level2">
+<h2>arcsin transformation ??</h2>
+</div>
+<div id="logit" class="section level2">
+<h2>logit</h2>
+</div>
 </div>
 
 

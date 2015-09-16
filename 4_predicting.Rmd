@@ -16,7 +16,7 @@ source("/git_repositories/bment/scripts/helper_scripts/load_packages.R")
 full_data <- readRDS("/git_repositories/betterment/data/rds_data/userANDdospert_full.RDS") %>%
               mutate(goal_type = factor(goal_type)) %>% #making sure goal type is a factor
               rename(DOSPERT_riskTaking = finRT_sum, beta = fin_RP) #renaming for clarity
-full_data$goal_type <- relevel(full_data$goal_type, ref = "RETIREMENT") #setting retirement as baseline
+full_data$goal_type <- relevel(full_data$goal_type, ref = "EMERGENCY") #setting emergency as baseline
 gamble <- readRDS("/git_repositories/betterment/data/rds_data/dospert_gamble.RDS")
 invest <- readRDS("/git_repositories/betterment/data/rds_data/dospert_invest.RDS")
 gamble <- left_join(full_data, gamble %>% select(finRT_sum_G:fin_RP_G, unique_id), 
@@ -91,7 +91,7 @@ htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 
         caption.above = TRUE, digits = 4)
 ```
 
-> **while users generally allocate more stocks than advised, they do less for `build wealth`, `emergency`, and `other` goal types, relative to the retirement goal baseline. this is true of our 3 risk taking predictors (DOSPERT risk taking, Dospert beta and dohmen) when controlling for recommended allocation. ** 
+> **while users generally allocate more stocks than advised, they do more so for `education`, `house`, `purchase`, and `retirement` goal types, relative to the emergency goal type baseline. this is true of our 3 risk taking predictors (DOSPERT risk taking, Dospert beta and dohmen) when controlling for recommended allocation. ** 
 
 \
 [back to table of contents](#TOC)
@@ -188,22 +188,22 @@ htmlreg(l = list(model1, model2, model3, model4, model5), center = TRUE, stars =
 + **model 2**
     + lm(deviation ~ DOSPERT risk taking + DOSPERT beta + dohmen + **goal type** + recommended allocation)
 
-> **with the inclusion of goal type in the model, the same significant relationship holds true for DOSPERT hypothetical risk taking as in Model 1. in addition, for a one unit increase in DOSPERT Beta value (more risk seeking behavior), there is a 1.76 percentage point increase in user allocation deviation. finally, users allocate less stocks for `build wealth`, `emergency` and `other` goal types, relative to the retirement goal baseline.**
+> **with the inclusion of goal type in the model, the same significant relationship holds true for DOSPERT hypothetical risk taking as in Model 1. in addition, for a one unit increase in DOSPERT Beta value (more risk seeking behavior), there is a 1.74 percentage point increase in user allocation deviation. finally, users allocate more stocks for `education`, `house`, `purchase`, and `retirement` goal types, relative to the emergency goal baseline.**
 
 + **model 3**
     + lm(deviation ~ DOSPERT risk taking + DOSPERT beta + dohmen + goal type + **DOSPERT risk taking**X**goal_type**  + recommended allocation)
   
-> with the inclusion of Dospert risk taking and goal type interaction, the same significant relationship holds true for DOSPERT beta as in Model 2.
+> with the inclusion of Dospert risk taking and goal type interaction, the same significant relationship holds true for DOSPERT beta as in Model 2. 
 
 + **model 4**
     + lm(deviation ~ DOSPERT risk taking + DOSPERT beta + dohmen + goal type + **DOSPERT beta**X**goal_type**  + recommended allocation)
 
-> **with the inclusion of Dospert beta and goal type interaction, the same significant relationship holds true for DOSPERT risk taking as in Models 1 + 2. in addition, for a one unit increase in DOSPERT Beta value (more risk seeking behavior), there is a 10.72/12.54 percentage point increase in user allocation deviation for `house`/`purchase` goal types.** finally, users allocate less stocks for `other` goal type, relative to the retirement goal baseline.
+> **with the inclusion of Dospert beta and goal type interaction, the same significant relationship holds true for DOSPERT risk taking as in Models 1 + 2. in addition, for a one unit increase in DOSPERT Beta value (more risk seeking behavior), there is a 8.26/10.09 percentage point increase in user allocation deviation for `house`/`purchase` goal types.** finally, users allocate more stocks for `house` and `purchase` goal types, relative to the emergency goal baseline.
 
 + **model 5**
     + lm(deviation ~ DOSPERT risk taking + DOSPERT beta + dohmen + goal type + **dohmen**X**goal_type**  + recommended allocation)
 
-> with the inclusion of dohmen and goal type interaction, the same significant relationship holds true for DOSPERT risk taking as in Models 1 + 2 + 4. the same significant holds true for DOSPERT beta from Models 2 + 3. in addition, users allocate less stocks for `education` goal type, relative to the retirement goal baseline.
+> with the inclusion of dohmen and goal type interaction, the same significant relationship holds true for DOSPERT risk taking as in Models 1 + 2 + 4. the same significant holds true for DOSPERT beta from Models 2 + 3. in addition, users allocate more stocks for `education` goal type, relative to the emergency goal baseline. finally, for a one unit increase in dohmen, there is a 4.96 percentage point decrease in user allocation deviation for `education` goal type.
 
 \
 [back to table of contents](#TOC)
