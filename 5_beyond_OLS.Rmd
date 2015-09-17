@@ -46,12 +46,26 @@ htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 
         caption.above = TRUE, digits = 4)
 ```
 
++ **model 1**
+    + lm(allocation ~ **DOSPERT risk taking** + recommended allocation)
+
+> for a one unit increase in DOSPERT hypothetical risk taking, there is a .58 percentage point increase in user stock allocation 
+
+
+  + **model 2**
+    + lm(allocation ~ **DOSPERT beta** + recommended allocation)
+
+> for a one unit increase in DOSPERT Beta value (more risk seeking behavior), there is a 2 percentage point increase in user allocation
+
+  + **model 3**
+    + lm(allocation ~ **dohmen** + recommended allocation)
+
+> for a one unit increase in dohmen self reported risk, there is a 1.31 percentage point increase in user allocation
+
 
 ##truncated regression
 
-> this technique is utilized when data for the outcome variable is only available for part of the sample (i.e. truncated sample). 
-
-  + likely not the case for our study
+> this technique is utilized when data for the outcome variable is only available for part of the sample (i.e. truncated sample). this is likely not the case for our study.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 library(truncreg) # http://www.ats.ucla.edu/stat/r/dae/truncreg.htm
@@ -83,9 +97,27 @@ htmlreg(l = list(pseudo1, pseudo2, pseudo3), center = TRUE, stars = c(0.001, 0.0
         override.pval = list(summary(model1)$coefficients[,4],
                              summary(model2)$coefficients[,4],
                              summary(model3)$coefficients[,4]),
-        bold = 0.1, caption = 'Allocation Deviation: Truncated Regression',
+        bold = 0.1, caption = 'Allocation: Truncated Regression',
         caption.above = TRUE, digits = 4)
 ```
+
+  + **sigma** = estimated standard deviation of the residuals
+
+  + **model 1**
+    + trunc(allocation ~ **DOSPERT risk taking** + recommended allocation)
+
+> for a one unit increase in DOSPERT hypothetical risk taking, there is a 1.02 percentage point increase in user stock allocation 
+
+
+  + **model 2**
+    + trunc(allocation ~ **DOSPERT beta** + recommended allocation)
+
+> for a one unit increase in DOSPERT Beta value (more risk seeking behavior), there is a 3.51 percentage point increase in user allocation
+
+  + **model 3**
+    + trunc(allocation ~ **dohmen** + recommended allocation)
+
+> for a one unit increase in dohmen self reported risk, there is a 1.31 percentage point increase in user allocation 
 
 \
 [back to table of contents](#TOC)
@@ -120,6 +152,24 @@ htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 
         caption.above = TRUE, digits = 4)
 ```
 
+  + **logSigma** = estimated standard deviation of the residuals in logarithmic terms 
+  
+  + **model 1**
+    + tobit(allocation ~ **DOSPERT risk taking** + recommended allocation)
+
+> for a one unit increase in DOSPERT hypothetical risk taking, there is a .67 percentage point increase in user stock allocation 
+
+
+  + **model 2**
+    + tobit(allocation ~ **DOSPERT beta** + recommended allocation)
+
+> for a one unit increase in DOSPERT Beta value (more risk seeking behavior), there is a 2 percentage point increase in user allocation
+
+  + **model 3**
+    + tobit(allocation ~ **dohmen** + recommended allocation)
+
+> for a one unit increase in dohmen self reported risk, there is a 1.49 percentage point increase in user allocation 
+
 \
 [back to table of contents](#TOC)
 
@@ -141,6 +191,22 @@ htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 
         caption.above = TRUE, digits = 4)
 ```
 
+ + **model 1**
+    + lm(allocation ~ **DOSPERT risk taking** + recommended allocation)
+
+> for a one unit increase in DOSPERT hypothetical risk taking, there is a .73 percentage point increase in user stock allocation 
+
+
+  + **model 2**
+    + lm(allocation ~ **DOSPERT beta** + recommended allocation)
+
+> for a one unit increase in DOSPERT Beta value (more risk seeking behavior), there is a 1.91 percentage point increase in user allocation
+
+  + **model 3**
+    + lm(allocation ~ **dohmen** + recommended allocation)
+
+> for a one unit increase in dohmen self reported risk, there is a 1.64 percentage point increase in user allocation 
+
 \
 [back to table of contents](#TOC)
 
@@ -159,8 +225,25 @@ model3 <- glm(allocation_stock_actual ~ dohmen + allocation_stock_rec,
 
 htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 0.05, 0.1),
         bold = 0.1, caption = 'Allocation: Fractional Logit',
+        override.coef = list(exp(model1$coefficients), exp(model2$coefficients), exp(model3$coefficients)),
         caption.above = TRUE, digits = 4)
 ```
+
+ + **model 1**
+    + lm(allocation ~ **DOSPERT risk taking** + recommended allocation)
+
+> the odds of investing in stocks increases by 3.2% for a one unit increase in DOSPERT hypothetical risk taking. 
+
+
+  + **model 2**
+    + lm(allocation ~ **DOSPERT beta** + recommended allocation)
+
+> the odds of investing in stocks increases by 11.6% for a one unit increase in DOSPERT Beta value (more risk seeking behavior).
+
+  + **model 3**
+    + lm(allocation ~ **dohmen** + recommended allocation)
+
+> the odds of investing in stocks increases by 7.1% for a one unit increase in dohmen self reported risk
 
 \
 [back to table of contents](#TOC)
@@ -181,17 +264,118 @@ model2 <- betareg(allocation_stock_actual ~ beta + allocation_stock_rec, data = 
 model3 <- betareg(allocation_stock_actual ~ dohmen + allocation_stock_rec, data = beta_reg)
 
 htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 0.05, 0.1),
+        override.coef = list(c(exp(model1$coefficients$mean), model1$coefficients$precision),
+                             c(exp(model2$coefficients$mean), model2$coefficients$precision),
+                             c(exp(model3$coefficients$mean), model3$coefficients$precision)),
         bold = 0.1, caption = 'Allocation: Beta Regression',
+        caption.above = TRUE, digits = 4)
+```
+
++ **model 1**
+    + lm(allocation ~ **DOSPERT risk taking** + recommended allocation)
+
+> the odds of investing in stocks increases by 4.75% for a one unit increase in DOSPERT hypothetical risk taking. 
+
+
+  + **model 2**
+    + lm(allocation ~ **DOSPERT beta** + recommended allocation)
+
+> the odds of investing in stocks increases by 11.18% for a one unit increase in DOSPERT Beta value (more risk seeking behavior).
+
+  + **model 3**
+    + lm(allocation ~ **dohmen** + recommended allocation)
+
+> the odds of investing in stocks increases by 11.04% for a one unit increase in dohmen self reported risk
+
+
+\
+[back to table of contents](#TOC)
+
+<br>
+
+<br>
+
+<br>
+
+***
+***
+***
+
+#allocation deviation
+
+##OLS regression
+
+```{r, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
+# controlling for stock allocation recommendation, people with higher risk taking score,
+# beta (positive: risk seeking), dohmen are more likely to deviate more positively.
+# as for control, people are significantly less likely to deviate positively when the recommended
+# stock allocation is higher: the higher the recommended allocation, the harder it is for
+# people to deviate positively (i.e. invest more than what is recommended in stocks)
+
+model1 <- lm(allocation_deviation ~ DOSPERT_riskTaking + allocation_stock_rec, data = full_data)
+model2 <- lm(allocation_deviation ~ beta + allocation_stock_rec, data = full_data)
+model3 <- lm(allocation_deviation ~ dohmen + allocation_stock_rec, data = full_data)
+
+htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 0.05, 0.1),
+        bold = 0.1, caption = 'Deviation: OLS regression',
         caption.above = TRUE, digits = 4)
 ```
 
 \
 [back to table of contents](#TOC)
 
-#allocation deviation
-
-##OLS regression
-
-##arcsin transformation ??
-
 ##logit 
+```{r, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
+library(mlogit)
+
+full_data <- full_data %>% mutate(deviation = ifelse(is.na(allocation_deviation), NA,
+                                  ifelse(allocation_deviation > 0, "positive",
+                                          ifelse(allocation_deviation == 0, "exact","negative"))))
+
+wide_full <- mlogit.data(full_data, choice = "deviation", shape = "wide")
+
+model1 <- mlogit(deviation ~ 1 | DOSPERT_riskTaking + allocation_stock_rec, data = wide_full, reflevel = "exact")
+model2 <- mlogit(deviation ~ 1 | beta + allocation_stock_rec, data = wide_full, reflevel = "exact")
+model3 <- mlogit(deviation ~ 1 | dohmen + allocation_stock_rec, data = wide_full, reflevel = "exact")
+
+htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 0.05, 0.1),
+        bold = 0.1, caption = 'Deviation: multinomial logistic',
+        caption.above = TRUE, digits = 4)
+
+# the higher DOSPERT risk taking score, beta, dohmen is, the more likely that the person will deviate positively, compared
+# to following the recommended allocation amount.
+
+# However, DOSPERT risk taking score, beta, dohmen is not significantly predictive of negative deviation. That is,
+# for example, even when the DOSPERT risk taking score is low, they are not more likely to deviate negatively.
+# in other models with different reference levels, positive deviation is significantly different with following
+# the recommendation and negative deivation, but negative and following the recommendation are not significnatly different.
+
+# Again, the higher the recommended allocation, the less likely that the person will positively deviate, compared to
+# following the recommendation. But again, allocation recommendation is not significant for comparison between
+# following the recommendation and negative deviation. That is, even when allocation is higher, people are not more likely to
+# deviate negatively compared to following the recommendation, or less likely to deviate negatively
+# when allocation recommendation  is lower.
+
+# model1 <- mlogit(deviation ~ 1 | DOSPERT_riskTaking + allocation_stock_rec, data = wide_full, reflevel = "negative")
+# model2 <- mlogit(deviation ~ 1 | beta + allocation_stock_rec, data = wide_full, reflevel = "negative")
+# model3 <- mlogit(deviation ~ 1 | dohmen + allocation_stock_rec, data = wide_full, reflevel = "negative")
+#
+#
+# htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 0.05, 0.1),
+#         bold = 0.1, caption = 'Deviation: multinomial logistic (ref = "negative")',
+#         caption.above = TRUE, digits = 4)
+#
+#
+# model1 <- mlogit(deviation ~ 1 | DOSPERT_riskTaking + allocation_stock_rec, data = wide_full, reflevel = "positive")
+# model2 <- mlogit(deviation ~ 1 | beta + allocation_stock_rec, data = wide_full, reflevel = "positive")
+# model3 <- mlogit(deviation ~ 1 | dohmen + allocation_stock_rec, data = wide_full, reflevel = "positive")
+#
+#
+# htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 0.05, 0.1),
+#         bold = 0.1, caption = 'Deviation: multinomial logistic (ref = "positive")',
+#         caption.above = TRUE, digits = 4)
+
+```
+
+\
+[back to table of contents](#TOC)
