@@ -1,5 +1,5 @@
 ---
-title: 'DOSPERT & Betterment User Data: Predicting Allocation Deviation'
+title: 'Predicting Allocation Deviation'
 author: "Salah Chafik <salah@decisionsciences.columbia.edu>"
 date: "Updated `r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -26,7 +26,7 @@ invest <- left_join(full_data, invest %>% select(finRT_sum_I:fin_RP_I, unique_id
 ```
 
 
-#Allocation Deviation 
+#OLS regression
 #####using deviation (between actual and recommended allocation) as the dependent variable, we examine three significant explanatory variables: DOSPERT hypothetical risk taking, DOSPERT beta score (risk attitude), and Dohmen self reported risk
 
 ```{r, echo=FALSE, results = 'asis'}
@@ -71,7 +71,7 @@ ggpairs(full_data %>% select(allocation_deviation, DOSPERT_riskTaking, beta, doh
 \
 [back to table of contents](#TOC)
 
-#Allocation Deviation: by goal type
+#OLS: by goal type
  
 ####[as seen previously](https://vlab.decisionsciences.columbia.edu/salah/user_goal_ii.html#deviations), goal type is significant as a predictive variable:
 ```{r, echo=FALSE}
@@ -96,7 +96,7 @@ htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 
 \
 [back to table of contents](#TOC)
 
-#Allocation Deviation: by DOSPERT sub-scales
+#OLS: by DOSPERT sub-scales
 ```{r, echo=FALSE, results='asis'}
 ss <- left_join(gamble, invest %>% select(account_id, DOSPERT_riskTaking_I = finRT_sum_I, 
                                           beta_I = fin_RP_I), by = "account_id") %>%
@@ -117,7 +117,7 @@ htmlreg(l = list(model1_ss), center = TRUE, stars = c(0.001, 0.01, 0.05, 0.1),
 \
 [back to table of contents](#TOC)
 
-#Allocation Deviation: by Dohmen
+#OLS: by Dohmen
 ```{r, echo=FALSE, results='asis'}
 model1_d <- lm(allocation_deviation ~ DOSPERT_riskTaking + dohmen + allocation_stock_rec, data = full_data)
 model2_d <- lm(allocation_deviation ~ beta +  dohmen + allocation_stock_rec, data = full_data)
@@ -140,7 +140,7 @@ htmlreg(l = list(model1_d, model2_d), center = TRUE, stars = c(0.001, 0.01, 0.05
 \
 [back to table of contents](#TOC)
 
-#Allocation Deviation: by DOSPERT sub-scales + Dohmen
+#OLS: by DOSPERT sub-scales + Dohmen
 
 ```{r, echo=FALSE, results='asis'}
 model1_dss <- lm(allocation_deviation ~ DOSPERT_riskTaking_G + DOSPERT_riskTaking_I + 
@@ -159,7 +159,7 @@ htmlreg(l = list(model1_dss), center = TRUE, stars = c(0.001, 0.01, 0.05, 0.1),
 \
 [back to table of contents](#TOC)
 
-#Allocation Deviation: combining risk taking predictors
+#OLS: combining risk taking predictors
 
 ```{r, echo=FALSE, results='asis'}
 model1 <- lm(allocation_deviation ~ DOSPERT_riskTaking + beta + dohmen +  
@@ -208,6 +208,77 @@ htmlreg(l = list(model1, model2, model3, model4, model5), center = TRUE, stars =
 \
 [back to table of contents](#TOC)
 
+
+#logit regression
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+full_data <- full_data %>% mutate(deviation = ifelse(is.na(allocation_deviation), NA,
+                                  ifelse(allocation_deviation > 0, "positive",
+                                          ifelse(allocation_deviation == 0, "exact","negative"))))
+
+print("deviation broken down by groups")
+table(full_data$deviation)
+```
+
+
+```{r, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
+library(mlogit)
+
+wide_full <- mlogit.data(full_data, choice = "deviation", shape = "wide")
+
+model1 <- mlogit(deviation ~ 1 | DOSPERT_riskTaking + allocation_stock_rec, data = wide_full, reflevel = "exact")
+model2 <- mlogit(deviation ~ 1 | beta + allocation_stock_rec, data = wide_full, reflevel = "exact")
+model3 <- mlogit(deviation ~ 1 | dohmen + allocation_stock_rec, data = wide_full, reflevel = "exact")
+
+htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 0.05, 0.1),
+        bold = 0.1, caption = 'Deviation: multinomial logistic',
+        caption.above = TRUE, digits = 4)
+
+# model1 <- mlogit(deviation ~ 1 | DOSPERT_riskTaking + allocation_stock_rec, data = wide_full, reflevel = "negative")
+# model2 <- mlogit(deviation ~ 1 | beta + allocation_stock_rec, data = wide_full, reflevel = "negative")
+# model3 <- mlogit(deviation ~ 1 | dohmen + allocation_stock_rec, data = wide_full, reflevel = "negative")
+#
+#
+# htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 0.05, 0.1),
+#         bold = 0.1, caption = 'Deviation: multinomial logistic (ref = "negative")',
+#         caption.above = TRUE, digits = 4)
+#
+#
+# model1 <- mlogit(deviation ~ 1 | DOSPERT_riskTaking + allocation_stock_rec, data = wide_full, reflevel = "positive")
+# model2 <- mlogit(deviation ~ 1 | beta + allocation_stock_rec, data = wide_full, reflevel = "positive")
+# model3 <- mlogit(deviation ~ 1 | dohmen + allocation_stock_rec, data = wide_full, reflevel = "positive")
+#
+#
+# htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 0.05, 0.1),
+#         bold = 0.1, caption = 'Deviation: multinomial logistic (ref = "positive")',
+#         caption.above = TRUE, digits = 4)
+
+```
+
+> the higher DOSPERT risk taking score/DOSPERT beta/Dohmen is, the more likely that the person will deviate positively (compared to following the recommended allocation amount).
+
+> however, none of our variables are significantly predictive of negative deviation. that is to say, even when the DOSPERT risk taking score is low, they are not more likely to deviate negatively. 
+
+> the higher the recommended allocation, the less likely that the person will positively deviate, compared to following the recommendation. but again, allocation recommendation is not significant for comparison between following the recommendation and negative deviation.
+
+\
+[back to table of contents](#TOC)
+
+#logit: by current balance
+```{r, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
+
+model1 <- mlogit(deviation ~ 1 | DOSPERT_riskTaking + allocation_stock_rec + user_current_balance, data = wide_full, reflevel = "exact")
+model2 <- mlogit(deviation ~ 1 | beta + allocation_stock_rec + user_current_balance, data = wide_full, reflevel = "exact")
+model3 <- mlogit(deviation ~ 1 | dohmen + allocation_stock_rec + user_current_balance, data = wide_full, reflevel = "exact")
+
+htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 0.05, 0.1),
+        bold = 0.1, caption = 'Deviation: multinomial logistic including current balance',
+        caption.above = TRUE, digits = 4)
+```
+
+> **people are more likely to follow the recommendation when their current balance is higher.**
+
+\
+[back to table of contents](#TOC)
 
 ```{r, echo=FALSE, results='asis', eval=FALSE}
 #Allocation Deviation: combining risk taking predictors (sub-scales)

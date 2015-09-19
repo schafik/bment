@@ -1,6 +1,6 @@
 
 ---
-title: 'DOSPERT & Betterment User Data: Further Regressions'
+title: 'Predicting Allocation'
 author: "Salah Chafik <salah@decisionsciences.columbia.edu>"
 date: "Updated `r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -26,9 +26,7 @@ invest <- left_join(full_data, invest %>% select(finRT_sum_I:fin_RP_I, unique_id
                     by=c("visitor_key" = "unique_id"))
 ```
 
-#allocation
-
-##OLS regression
+#OLS regression
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 model1 <- lm(allocation_stock_actual ~ DOSPERT_riskTaking + allocation_stock_rec, data = full_data)
 model2 <- lm(allocation_stock_actual ~ beta + allocation_stock_rec, data = full_data)
@@ -63,7 +61,7 @@ htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 
 > for a one unit increase in dohmen self reported risk, there is a 1.31 percentage point increase in user allocation
 
 
-##truncated regression
+#truncated regression
 
 > this technique is utilized when data for the outcome variable is only available for part of the sample (i.e. truncated sample). this is likely not the case for our study.
 
@@ -122,7 +120,7 @@ htmlreg(l = list(pseudo1, pseudo2, pseudo3), center = TRUE, stars = c(0.001, 0.0
 \
 [back to table of contents](#TOC)
 
-##tobit/censored regression 
+#tobit/censored regression 
 
 > technique used when true value of outcome variable is not available because of some restriction (i.e. censored)
   
@@ -173,7 +171,7 @@ htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 
 \
 [back to table of contents](#TOC)
 
-##arcsin transformation
+#arcsin transformation
 
 ```{r, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
 # arc-sin transform on the proportions, which usually make them normal
@@ -210,7 +208,7 @@ htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 
 \
 [back to table of contents](#TOC)
 
-##fractional logit model 
+#fractional logit model 
 ```{r, results='asis', echo=FALSE}
 # http://stackoverflow.com/questions/19893133/fractional-logit-model-in-r
 # http://www.ats.ucla.edu/stat/stata/faq/proportion.htm
@@ -248,7 +246,7 @@ htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 
 \
 [back to table of contents](#TOC)
 
-##beta regression
+#beta regression
 > used for data that is bounded between 0 and 1. [see paper here](http://www.jstatsoft.org/v34/i02/paper).  
 
 ```{r, results='asis', echo=FALSE}
@@ -301,81 +299,3 @@ htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 
 ***
 ***
 
-#allocation deviation
-
-##OLS regression
-
-```{r, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
-# controlling for stock allocation recommendation, people with higher risk taking score,
-# beta (positive: risk seeking), dohmen are more likely to deviate more positively.
-# as for control, people are significantly less likely to deviate positively when the recommended
-# stock allocation is higher: the higher the recommended allocation, the harder it is for
-# people to deviate positively (i.e. invest more than what is recommended in stocks)
-
-model1 <- lm(allocation_deviation ~ DOSPERT_riskTaking + allocation_stock_rec, data = full_data)
-model2 <- lm(allocation_deviation ~ beta + allocation_stock_rec, data = full_data)
-model3 <- lm(allocation_deviation ~ dohmen + allocation_stock_rec, data = full_data)
-
-htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 0.05, 0.1),
-        bold = 0.1, caption = 'Deviation: OLS regression',
-        caption.above = TRUE, digits = 4)
-```
-
-\
-[back to table of contents](#TOC)
-
-##logit 
-```{r, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
-library(mlogit)
-
-full_data <- full_data %>% mutate(deviation = ifelse(is.na(allocation_deviation), NA,
-                                  ifelse(allocation_deviation > 0, "positive",
-                                          ifelse(allocation_deviation == 0, "exact","negative"))))
-
-wide_full <- mlogit.data(full_data, choice = "deviation", shape = "wide")
-
-model1 <- mlogit(deviation ~ 1 | DOSPERT_riskTaking + allocation_stock_rec, data = wide_full, reflevel = "exact")
-model2 <- mlogit(deviation ~ 1 | beta + allocation_stock_rec, data = wide_full, reflevel = "exact")
-model3 <- mlogit(deviation ~ 1 | dohmen + allocation_stock_rec, data = wide_full, reflevel = "exact")
-
-htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 0.05, 0.1),
-        bold = 0.1, caption = 'Deviation: multinomial logistic',
-        caption.above = TRUE, digits = 4)
-
-# the higher DOSPERT risk taking score, beta, dohmen is, the more likely that the person will deviate positively, compared
-# to following the recommended allocation amount.
-
-# However, DOSPERT risk taking score, beta, dohmen is not significantly predictive of negative deviation. That is,
-# for example, even when the DOSPERT risk taking score is low, they are not more likely to deviate negatively.
-# in other models with different reference levels, positive deviation is significantly different with following
-# the recommendation and negative deivation, but negative and following the recommendation are not significnatly different.
-
-# Again, the higher the recommended allocation, the less likely that the person will positively deviate, compared to
-# following the recommendation. But again, allocation recommendation is not significant for comparison between
-# following the recommendation and negative deviation. That is, even when allocation is higher, people are not more likely to
-# deviate negatively compared to following the recommendation, or less likely to deviate negatively
-# when allocation recommendation  is lower.
-
-# model1 <- mlogit(deviation ~ 1 | DOSPERT_riskTaking + allocation_stock_rec, data = wide_full, reflevel = "negative")
-# model2 <- mlogit(deviation ~ 1 | beta + allocation_stock_rec, data = wide_full, reflevel = "negative")
-# model3 <- mlogit(deviation ~ 1 | dohmen + allocation_stock_rec, data = wide_full, reflevel = "negative")
-#
-#
-# htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 0.05, 0.1),
-#         bold = 0.1, caption = 'Deviation: multinomial logistic (ref = "negative")',
-#         caption.above = TRUE, digits = 4)
-#
-#
-# model1 <- mlogit(deviation ~ 1 | DOSPERT_riskTaking + allocation_stock_rec, data = wide_full, reflevel = "positive")
-# model2 <- mlogit(deviation ~ 1 | beta + allocation_stock_rec, data = wide_full, reflevel = "positive")
-# model3 <- mlogit(deviation ~ 1 | dohmen + allocation_stock_rec, data = wide_full, reflevel = "positive")
-#
-#
-# htmlreg(l = list(model1, model2, model3), center = TRUE, stars = c(0.001, 0.01, 0.05, 0.1),
-#         bold = 0.1, caption = 'Deviation: multinomial logistic (ref = "positive")',
-#         caption.above = TRUE, digits = 4)
-
-```
-
-\
-[back to table of contents](#TOC)

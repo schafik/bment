@@ -20,7 +20,7 @@ output:
 ###Betterment Data + DOSPERT 
 
   * [Predicting Allocation Deviation](http://schafik.github.io/bment/4_predicting.html)
-  * [Analysis Beyond OLS  ](http://schafik.github.io/bment/5_beyond_OLS.html) 
+  * [Predicting Allocation](http://schafik.github.io/bment/5_beyond_OLS.html) 
   
   
   
